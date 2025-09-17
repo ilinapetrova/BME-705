@@ -18,6 +18,9 @@ clear all
 Data = TA data
 load (fatigue data);
 load(stimulation data)
+Data = TA_data1;
+load (FESfatigue_data10)
+load(FStim_data)
 
 %define the three sampling frequencies for each data set
 fs = 2000; % Sampling Frequency (Hz)
@@ -31,11 +34,18 @@ Force = (Data.increase_ta_force);
 
 % Define time as a vector
 
+t = 0:0.1:10; %to change based on plots 
 
 % Processing: 
 
 %1)original graphs
 
+figure; 
+plot(EMG,t);
+xlabel('EMG');
+ylabel('Time(n)');
+title('EMG plot');
+grid on;
 
 % 2) normalizations
 
