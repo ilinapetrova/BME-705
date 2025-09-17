@@ -4,7 +4,7 @@
 %
 % Created by: Devon Santillo, 2020
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Names: Tanvir Hassan
+% Names: Tanvir Hassan, ilina Petrova
  
 % Student IDs: 501104056
 %
