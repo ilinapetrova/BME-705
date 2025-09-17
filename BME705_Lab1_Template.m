@@ -4,7 +4,7 @@
 %
 % Created by: Devon Santillo, 2020
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Names: Tanvir Hassan, 
+% Names: Tanvir Hassan, Ilina Petrova
  
 % Student IDs: 501104056
 %
@@ -16,7 +16,10 @@ clear all
 % Load all relevent files and, if necessary, save the components of them
 % into variables
 
-Data = TA data
+%Fes-10
+%Ta-1
+
+TA = Data = ("//path") %TA data
 load (fatigue data);
 load(stimulation data)
 
