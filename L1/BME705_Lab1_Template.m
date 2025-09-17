@@ -6,7 +6,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Names: Tanvir Hassan, ilina Petrova
  
-% Student IDs: 501104056
 %
 
 close all
