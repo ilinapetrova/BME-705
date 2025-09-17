@@ -21,6 +21,7 @@ load (fatigue data);
 load(stimulation data)
 
 %define the three sampling frequencies for each data set
+fs = 2000; % Sampling Frequency (Hz)
 
 
 
