@@ -4,10 +4,9 @@
 %
 % Created by: Devon Santillo, 2020
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Names: Tanvir
+% Names: Tanvir Hassan, Ilina Petrova
  
-% Student IDs: 501104056
-%
+% Student IDs: 501104056, PLEASE ENTER YOUR ID
 
 close all
 clear all
@@ -16,39 +15,41 @@ clear all
 % Load all relevent files and, if necessary, save the components of them
 % into variables
 
-Data = load("TA_data1.mat");
-fatigue_data = load("FESfatigue_data10.mat");
+tData = load("TA_data1.mat"); % loading the TA-1 dataset tht was assigned, and load it into the tData variable
+fData = load("FESfatigue_data10.mat");
 stimulation_data = load("FStim_data.mat");
 
-%define the three sampling frequencies for each data set
-fs_Data = 2000;
-fs_fatigue_data = 1000;
-fs_simulation_data = 100;
+%the three sampling frequencies for each data given in the lab manual
+fs = 2000; 
+fs_fatigue = 1000;
+fs_simulation = 100;
 
 %% Part 1: Introduction to EMG analysis
 % separate EMG and force data using the dot operator
-EMG = (Data.increase_ta_emg);
-Force = (Data.increase_ta_force);
+EMG = (tData.increase_ta_emg);
+Force = (tData.increase_ta_force);
 
-% Define time as a vector
+% Define time as a linear vector
 
-t = (0:length(EMG)-1) / fs_Data;
+t = (0:length(EMG)-1) / fs;
 
 % Processing:
 
-G = 500;
+G = 500; % Gain applied during aquisition
 
-EMG= EMG/G;
-EMG= EMG*1000; % convert to mV
+EMG= (EMG/G)*1000; % convert to mV and get rid of the gain
 
 %1)original graphs
 
 figure;
-plot(t, EMG);
-title('EMG');
-xlabel('Time (s)');
-ylabel('EMG (mV)');
-grid;
+plot(t, EMG, 'LineWidth', 1.5, 'Color', [0 0.4470 0.7410]); % Improved line width and color
+title('EMG Signal', 'FontSize', 14, 'FontWeight', 'bold'); % Enhanced title
+xlabel('Time (s)', 'FontSize', 12); % Increased font size for x-axis label
+ylabel('EMG (mV)', 'FontSize', 12); % Increased font size for y-axis label
+grid on; % Ensure grid is on
+xlim([0 max(t)]); % Set x-axis limits
+ylim([min(EMG) max(EMG)]); % Set y-axis limits based on EMG data
+set(gca, 'FontSize', 12); % Set font size for axes
 
 % 2) normalizations
 
@@ -66,7 +67,7 @@ grid;
 fc = 2.5; % corner frequency
 %establishing the transfer function of a 4th order butterworth filter
 
-[b, a] = butter(4, fc/(fs_Data/2));
+[b, a] = butter(4, fc/(fs/2));
 EMG_filtered = filter(b, a, EMG_rectified);
 
 figure;
@@ -147,14 +148,14 @@ grid on;
 %% Part 2: Effects of stimulation frequency on muscle fatigue
 
 % Find the shortest length for 30Hz data
-min_length_30 = min([length(fatigue_data.force30_1), length(fatigue_data.force30_2), length(fatigue_data.force30_3)]);
+min_length_30 = min([length(fData.force30_1), length(fData.force30_2), length(fData.force30_3)]);
 
 % Trim all 30Hz trials to the shortest length
-force30_1_trimmed = fatigue_data.force30_1(1:min_length_30);
-force30_2_trimmed = fatigue_data.force30_2(1:min_length_30);
-force30_3_trimmed = fatigue_data.force30_3(1:min_length_30);
+force30_1_trimmed = fData.force30_1(1:min_length_30);
+force30_2_trimmed = fData.force30_2(1:min_length_30);
+force30_3_trimmed = fData.force30_3(1:min_length_30);
 
-tf30 = (0 : min_length_30 - 1) / fs_fatigue_data;
+tf30 = (0 : min_length_30 - 1) / fs_fatigue;
 
 % Calculate the average and standard deviation for 30Hz trials
 avg_force30 = (force30_1_trimmed + force30_2_trimmed + force30_3_trimmed) / 3;
@@ -175,15 +176,15 @@ legend('show');
 grid on;
 
 % Repeat the same process for 60Hz data
-min_length_60 = min([length(fatigue_data.force60_1), length(fatigue_data.force60_2), length(fatigue_data.force60_3)]);
+min_length_60 = min([length(fData.force60_1), length(fData.force60_2), length(fData.force60_3)]);
 
 % Trim all 60Hz trials to the shortest length
-force60_1_trimmed = fatigue_data.force60_1(1:min_length_60);
-force60_2_trimmed = fatigue_data.force60_2(1:min_length_60);
-force60_3_trimmed = fatigue_data.force60_3(1:min_length_60);
+force60_1_trimmed = fData.force60_1(1:min_length_60);
+force60_2_trimmed = fData.force60_2(1:min_length_60);
+force60_3_trimmed = fData.force60_3(1:min_length_60);
 
 % Create time vectors for the trimmed data
-tf60 = (0 : min_length_60 - 1) / fs_fatigue_data;
+tf60 = (0 : min_length_60 - 1) / fs_fatigue;
 
 % Calculate the average and standard deviation for 60Hz trials
 avg_force60 = (force60_1_trimmed + force60_2_trimmed + force60_3_trimmed) / 3;
@@ -206,7 +207,7 @@ grid on;
 %% Part 3: Stimulation input - motor threshold investigation
 
 % Define time of signal
-t_stimulation_data = (0 : length(stimulation_data.force) - 1) / fs_simulation_data;
+t_stimulation_data = (0 : length(stimulation_data.force) - 1) / fs_simulation;
 
 % Plot original force signal
 figure;
@@ -258,7 +259,7 @@ grid on;
 %% Part 3: Stimulation input - motor threshold investigation
 
 % Define time of signal
-t_stimulation_data = (0 : length(stimulation_data.force) - 1) / fs_simulation_data;
+t_stimulation_data = (0 : length(stimulation_data.force) - 1) / fs_simulation;
 
 % Plot original force signal
 figure;
